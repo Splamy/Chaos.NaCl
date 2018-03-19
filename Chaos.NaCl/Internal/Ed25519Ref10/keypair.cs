@@ -1,23 +1,22 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
-    internal static partial class Ed25519Operations
-    {
-        public static void crypto_sign_keypair(byte[] pk, int pkoffset, byte[] sk, int skoffset, byte[] seed, int seedoffset)
-        {
-            GroupElementP3 A;
-            int i;
+	internal static partial class Ed25519Operations
+	{
+		public static void crypto_sign_keypair(Span<byte> pk, Span<byte> sk, ReadOnlySpan<byte> seed)
+		{
+			seed.CopyTo(sk);
+			Span<byte> h = stackalloc byte[64];
+			Sha512.Hash(sk.Slice(0, 32), h);
 
-            Array.Copy(seed, seedoffset, sk, skoffset, 32);
-            byte[] h = Sha512.Hash(sk, skoffset, 32);//ToDo: Remove alloc
-            ScalarOperations.sc_clamp(h, 0);
+			ScalarOperations.sc_clamp(h);
 
-            GroupOperations.ge_scalarmult_base(out A, h, 0);
-            GroupOperations.ge_p3_tobytes(pk, pkoffset, ref A);
+			GroupOperations.ge_scalarmult_base(out var A, h);
+			GroupOperations.ge_p3_tobytes(pk, in A);
 
-            for (i = 0; i < 32; ++i) sk[skoffset + 32 + i] = pk[pkoffset + i];
-            CryptoBytes.Wipe(h);
-        }
-    }
+			for (int i = 0; i < 32; ++i) sk[32 + i] = pk[i];
+			CryptoBytes.Wipe(h);
+		}
+	}
 }

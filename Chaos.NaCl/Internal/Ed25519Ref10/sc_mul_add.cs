@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
     internal static partial class ScalarOperations
     {
-        static Int64 load_3(byte[] input, int offset)
+        static Int64 load_3(ReadOnlySpan<byte> input, int offset)
         {
             Int64 result;
             result = (Int64)input[offset + 0];
@@ -13,7 +13,7 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
             return result;
         }
 
-        static Int64 load_4(byte[] input, int offset)
+        static Int64 load_4(ReadOnlySpan<byte> input, int offset)
         {
             Int64 result;
             result = (Int64)input[offset + 0];
@@ -34,7 +34,7 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
           where l = 2^252 + 27742317777372353535851937790883648493.
         */
 
-        public static void sc_muladd(byte[] s, byte[] a, byte[] b, byte[] c)
+        public static void sc_muladd(Span<byte> s, ReadOnlySpan<byte> a, ReadOnlySpan<byte> b, ReadOnlySpan<byte> c)
         {
             Int64 a0 = 2097151 & load_3(a, 0);
             Int64 a1 = 2097151 & (load_4(a, 2) >> 5);

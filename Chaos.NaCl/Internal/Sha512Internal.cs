@@ -41,7 +41,7 @@ namespace Chaos.NaCl.Internal
             state.x7 = 0x5be0cd19137e2179;
         }
 
-        internal static void Core(out Array8<UInt64> outputState, ref Array8<UInt64> inputState, ref Array16<UInt64> input)
+        internal static void Core(out Array8<UInt64> outputState, in Array8<UInt64> inputState, in Array16<UInt64> input)
         {
             unchecked
             {

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
 	internal static partial class FieldOperations
 	{
@@ -16,7 +16,7 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 		   |h| bounded by 1.1*2^25,1.1*2^24,1.1*2^25,1.1*2^24,etc.
 		*/
 
-		public static void fe_mul121666(out FieldElement h, ref FieldElement f)
+		public static void fe_mul121666(out FieldElement h, in FieldElement f)
 		{
 			Int32 f0 = f.x0;
 			Int32 f1 = f.x1;

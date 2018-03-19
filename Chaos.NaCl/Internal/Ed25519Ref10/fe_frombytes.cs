@@ -1,41 +1,41 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
 	internal static partial class FieldOperations
 	{
-		private static Int64 load_3(byte[] data, int offset)
+		private static Int64 load_3(ReadOnlySpan<byte> data)
 		{
 			uint result;
-			result = (uint)data[offset + 0];
-			result |= (uint)data[offset + 1] << 8;
-			result |= (uint)data[offset + 2] << 16;
-			return (Int64)(UInt64)result;
+			result = (uint)data[0];
+			result |= (uint)data[1] << 8;
+			result |= (uint)data[2] << 16;
+			return result;
 		}
 
-		private static Int64 load_4(byte[] data, int offset)
+		private static Int64 load_4(ReadOnlySpan<byte> data)
 		{
 			uint result;
-			result = (uint)data[offset + 0];
-			result |= (uint)data[offset + 1] << 8;
-			result |= (uint)data[offset + 2] << 16;
-			result |= (uint)data[offset + 3] << 24;
-			return (Int64)(UInt64)result;
+			result = (uint)data[0];
+			result |= (uint)data[1] << 8;
+			result |= (uint)data[2] << 16;
+			result |= (uint)data[3] << 24;
+			return result;
 		}
 
 		//	Ignores top bit of h.
-		internal static void fe_frombytes(out FieldElement h, byte[] data, int offset)
+		internal static void fe_frombytes(out FieldElement h, ReadOnlySpan<byte> data)
 		{
-			Int64 h0 = load_4(data, offset);
-			Int64 h1 = load_3(data, offset + 4) << 6;
-			Int64 h2 = load_3(data, offset + 7) << 5;
-			Int64 h3 = load_3(data, offset + 10) << 3;
-			Int64 h4 = load_3(data, offset + 13) << 2;
-			Int64 h5 = load_4(data, offset + 16);
-			Int64 h6 = load_3(data, offset + 20) << 7;
-			Int64 h7 = load_3(data, offset + 23) << 5;
-			Int64 h8 = load_3(data, offset + 26) << 4;
-			Int64 h9 = (load_3(data, offset + 29) & 8388607) << 2;
+			Int64 h0 = load_4(data);
+			Int64 h1 = load_3(data.Slice(4)) << 6;
+			Int64 h2 = load_3(data.Slice(7)) << 5;
+			Int64 h3 = load_3(data.Slice(10)) << 3;
+			Int64 h4 = load_3(data.Slice(13)) << 2;
+			Int64 h5 = load_4(data.Slice(16));
+			Int64 h6 = load_3(data.Slice(20)) << 7;
+			Int64 h7 = load_3(data.Slice(23)) << 5;
+			Int64 h8 = load_3(data.Slice(26)) << 4;
+			Int64 h9 = (load_3(data.Slice(29)) & 8388607) << 2;
 			Int64 carry0;
 			Int64 carry1;
 			Int64 carry2;
@@ -72,18 +72,18 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 		}
 
 		// does NOT ignore top bit
-		internal static void fe_frombytes2(out FieldElement h, byte[] data, int offset)
+		internal static void fe_frombytes2(out FieldElement h, ReadOnlySpan<byte> data)
 		{
-			Int64 h0 = load_4(data, offset);
-			Int64 h1 = load_3(data, offset + 4) << 6;
-			Int64 h2 = load_3(data, offset + 7) << 5;
-			Int64 h3 = load_3(data, offset + 10) << 3;
-			Int64 h4 = load_3(data, offset + 13) << 2;
-			Int64 h5 = load_4(data, offset + 16);
-			Int64 h6 = load_3(data, offset + 20) << 7;
-			Int64 h7 = load_3(data, offset + 23) << 5;
-			Int64 h8 = load_3(data, offset + 26) << 4;
-			Int64 h9 = load_3(data, offset + 29) << 2;
+			Int64 h0 = load_4(data);
+			Int64 h1 = load_3(data.Slice(4)) << 6;
+			Int64 h2 = load_3(data.Slice(7)) << 5;
+			Int64 h3 = load_3(data.Slice(10)) << 3;
+			Int64 h4 = load_3(data.Slice(13)) << 2;
+			Int64 h5 = load_4(data.Slice(16));
+			Int64 h6 = load_3(data.Slice(20)) << 7;
+			Int64 h7 = load_3(data.Slice(23)) << 5;
+			Int64 h8 = load_3(data.Slice(26)) << 4;
+			Int64 h9 = load_3(data.Slice(29)) << 2;
 			Int64 carry0;
 			Int64 carry1;
 			Int64 carry2;

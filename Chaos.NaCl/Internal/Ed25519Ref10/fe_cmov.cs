@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
 	internal static partial class FieldOperations
 	{
@@ -12,7 +12,7 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 		*/
 
 		//void fe_cmov(fe f,const fe g,unsigned int b)
-		internal static void fe_cmov(ref FieldElement f, ref FieldElement g, int b)
+		internal static void fe_cmov(ref FieldElement f, in FieldElement g, int b)
 		{
 			Int32 f0 = f.x0;
 			Int32 f1 = f.x1;

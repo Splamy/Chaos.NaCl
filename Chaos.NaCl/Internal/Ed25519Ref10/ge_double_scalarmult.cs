@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
 	internal static partial class GroupOperations
 	{
-		private static void slide(sbyte[] r, byte[] a)
+		private static void slide(Span<sbyte> r, ReadOnlySpan<byte> a)
 		{
 			int i;
 			int b;
@@ -52,13 +52,12 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 		B is the Ed25519 base point (x,4/5) with x positive.
 		*/
 
-		public static void ge_double_scalarmult_vartime(out GroupElementP2 r, byte[] a, ref GroupElementP3 A, byte[] b)
+		public static void ge_double_scalarmult_vartime(out GroupElementP2 r, ReadOnlySpan<byte> a, in GroupElementP3 A, ReadOnlySpan<byte> b)
 		{
 			GroupElementPreComp[] Bi = LookupTables.Base2;
-            // todo: Perhaps remove these allocations?
-			sbyte[] aslide = new sbyte[256];
-			sbyte[] bslide = new sbyte[256];
-			GroupElementCached[] Ai = new GroupElementCached[8]; /* A,3A,5A,7A,9A,11A,13A,15A */
+			Span<sbyte> aslide = stackalloc sbyte[256];
+			Span<sbyte> bslide = stackalloc sbyte[256];
+			Span<GroupElementCached> Ai = stackalloc GroupElementCached[8]; /* A,3A,5A,7A,9A,11A,13A,15A */
 			GroupElementP1P1 t;
 			GroupElementP3 u;
 			GroupElementP3 A2;
@@ -67,15 +66,15 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 			slide(aslide, a);
 			slide(bslide, b);
 
-			ge_p3_to_cached(out Ai[0], ref A);
-			ge_p3_dbl(out t, ref A); ge_p1p1_to_p3(out A2, ref t);
-			ge_add(out t, ref A2, ref Ai[0]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[1], ref u);
-			ge_add(out t, ref A2, ref Ai[1]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[2], ref u);
-			ge_add(out t, ref A2, ref Ai[2]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[3], ref u);
-			ge_add(out t, ref A2, ref Ai[3]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[4], ref u);
-			ge_add(out t, ref A2, ref Ai[4]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[5], ref u);
-			ge_add(out t, ref A2, ref Ai[5]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[6], ref u);
-			ge_add(out t, ref A2, ref Ai[6]); ge_p1p1_to_p3(out u, ref t); ge_p3_to_cached(out Ai[7], ref u);
+			ge_p3_to_cached(out Ai[0], in A);
+			ge_p3_dbl(out t, in A); ge_p1p1_to_p3(out A2, in t);
+			ge_add(out t, in A2, in Ai[0]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[1], in u);
+			ge_add(out t, in A2, in Ai[1]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[2], in u);
+			ge_add(out t, in A2, in Ai[2]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[3], in u);
+			ge_add(out t, in A2, in Ai[3]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[4], in u);
+			ge_add(out t, in A2, in Ai[4]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[5], in u);
+			ge_add(out t, in A2, in Ai[5]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[6], in u);
+			ge_add(out t, in A2, in Ai[6]); ge_p1p1_to_p3(out u, in t); ge_p3_to_cached(out Ai[7], in u);
 
 			ge_p2_0(out r);
 
@@ -86,31 +85,31 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 
 			for (; i >= 0; --i)
 			{
-				ge_p2_dbl(out t, ref r);
+				ge_p2_dbl(out t, in r);
 
 				if (aslide[i] > 0)
 				{
-					ge_p1p1_to_p3(out u, ref t);
-					ge_add(out t, ref u, ref Ai[aslide[i] / 2]);
+					ge_p1p1_to_p3(out u, in t);
+					ge_add(out t, in u, in Ai[aslide[i] / 2]);
 				}
 				else if (aslide[i] < 0)
 				{
-					ge_p1p1_to_p3(out u, ref t);
-					ge_sub(out t, ref u, ref Ai[(-aslide[i]) / 2]);
+					ge_p1p1_to_p3(out u, in t);
+					ge_sub(out t, in u, in Ai[(-aslide[i]) / 2]);
 				}
 
 				if (bslide[i] > 0)
 				{
-					ge_p1p1_to_p3(out u, ref t);
-					ge_madd(out t, ref u, ref Bi[bslide[i] / 2]);
+					ge_p1p1_to_p3(out u, in t);
+					ge_madd(out t, in u, in Bi[bslide[i] / 2]);
 				}
 				else if (bslide[i] < 0)
 				{
-					ge_p1p1_to_p3(out u, ref t);
-					ge_msub(out t, ref u, ref Bi[(-bslide[i]) / 2]);
+					ge_p1p1_to_p3(out u, in t);
+					ge_msub(out t, in u, in Bi[(-bslide[i]) / 2]);
 				}
 
-				ge_p1p1_to_p2(out r, ref t);
+				ge_p1p1_to_p2(out r, in t);
 			}
 		}
 

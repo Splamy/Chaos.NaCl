@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
 	internal static partial class FieldOperations
 	{
@@ -18,7 +18,7 @@ Postconditions:
 		/*
 		See fe_mul.c for discussion of implementation strategy.
 		*/
-		internal static void fe_sq2(out FieldElement h, ref FieldElement f)
+		internal static void fe_sq2(out FieldElement h, in FieldElement f)
 		{
 			Int32 f0 = f.x0;
 			Int32 f1 = f.x1;

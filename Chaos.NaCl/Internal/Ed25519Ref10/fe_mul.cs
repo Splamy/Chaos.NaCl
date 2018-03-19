@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
 	internal static partial class FieldOperations
 	{
@@ -36,7 +36,7 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
 		With tighter constraints on inputs can squeeze carries into int32.
 		*/
 
-		internal static void fe_mul(out FieldElement h, ref FieldElement f, ref FieldElement g)
+		internal static void fe_mul(out FieldElement h, in FieldElement f, in FieldElement g)
 		{
 			Int32 f0 = f.x0;
 			Int32 f1 = f.x1;

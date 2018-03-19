@@ -93,10 +93,10 @@ namespace Chaos.NaCl.Tests
         public void Sha512_1000000()
         {
             Array8<ulong> state;
-            Array16<ulong> data = default(Array16<ulong>);
+            Array16<ulong> data = default;
             Sha512Internal.Sha512Init(out state);
             for (int i = 0; i < 100000; i++)
-                Sha512Internal.Core(out state, ref state, ref data);
+                Sha512Internal.Core(out state, in state, in data);
         }
 
         [TestMethod]

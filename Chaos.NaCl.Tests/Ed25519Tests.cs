@@ -163,7 +163,7 @@ namespace Chaos.NaCl.Tests
             Ed25519.KeyPairFromSeed(out publicEdwards, out privateEdwards, seed);
             var sharedEdwards = Ed25519.KeyExchange(publicEdwards, privateEdwards);
 
-            var privateMontgomery = Sha512.Hash(seed).Take(32).ToArray();
+            var privateMontgomery = System.Security.Cryptography.SHA512.Create().ComputeHash(seed).Take(32).ToArray();
             var publicMontgomery = MontgomeryCurve25519.GetPublicKey(privateMontgomery);
             var sharedMontgomery = MontgomeryCurve25519.KeyExchange(publicMontgomery, privateMontgomery);
 
@@ -181,7 +181,7 @@ namespace Chaos.NaCl.Tests
             var sharedEdwards = new byte[32].Pad();
             Ed25519.KeyExchange(sharedEdwards, publicEdwards, privateEdwards);
 
-            var privateMontgomery = Sha512.Hash(seed.UnPad()).Take(32).ToArray();
+            var privateMontgomery = System.Security.Cryptography.SHA512.Create().ComputeHash(seed.UnPad()).Take(32).ToArray();
             var publicMontgomery = MontgomeryCurve25519.GetPublicKey(privateMontgomery);
             var sharedMontgomery = MontgomeryCurve25519.KeyExchange(publicMontgomery, privateMontgomery);
 

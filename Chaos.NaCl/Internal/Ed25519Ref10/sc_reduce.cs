@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chaos.NaCl.Internal.Ed25519Ref10
+namespace Chaos.NaCl.Ed25519Ref10
 {
     internal static partial class ScalarOperations
     {
@@ -14,7 +14,7 @@ namespace Chaos.NaCl.Internal.Ed25519Ref10
           Overwrites s in place.
         */
 
-        public static void sc_reduce(byte[] s)
+        public static void sc_reduce(Span<byte> s)
         {
             Int64 s0 = 2097151 & load_3(s, 0);
             Int64 s1 = 2097151 & (load_4(s, 2) >> 5);

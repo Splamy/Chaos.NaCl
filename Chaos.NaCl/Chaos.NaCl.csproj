@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Chaos.NaCl</RootNamespace>
     <AssemblyName>Chaos.NaCl</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -24,6 +24,8 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>SecurityRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,25 +34,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>default</LangVersion>
+    <LangVersion>7.2</LangVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CryptoBytes.cs" />
+    <Compile Include="Internal\Array16.cs" />
     <Compile Include="Internal\Array8.cs" />
     <Compile Include="Internal\ByteIntegerConverter.cs" />
-    <Compile Include="CryptoBytes.cs" />
-    <Compile Include="Internal\Ed25519Ref10\fe_cswap.cs" />
-    <Compile Include="Internal\Ed25519Ref10\fe_mul121666.cs" />
-    <Compile Include="Internal\Ed25519Ref10\scalarmult.cs" />
-    <Compile Include="Internal\Ed25519Ref10\sc_clamp.cs" />
-    <Compile Include="Internal\InternalAssert.cs" />
-    <Compile Include="Internal\Poly1305Donna.cs" />
-    <Compile Include="Internal\Sha512Internal.cs" />
-    <Compile Include="MontgomeryCurve25519.cs" />
-    <Compile Include="Ed25519.cs" />
     <Compile Include="Internal\Ed25519Ref10\base.cs" />
     <Compile Include="Internal\Ed25519Ref10\base2.cs" />
     <Compile Include="Internal\Ed25519Ref10\d.cs" />
@@ -59,11 +54,13 @@
     <Compile Include="Internal\Ed25519Ref10\fe_1.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_add.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_cmov.cs" />
+    <Compile Include="Internal\Ed25519Ref10\fe_cswap.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_frombytes.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_invert.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_isnegative.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_isnonzero.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_mul.cs" />
+    <Compile Include="Internal\Ed25519Ref10\fe_mul121666.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_neg.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_pow22523.cs" />
     <Compile Include="Internal\Ed25519Ref10\fe_sq.cs" />
@@ -92,19 +89,30 @@
     <Compile Include="Internal\Ed25519Ref10\GroupElement.cs" />
     <Compile Include="Internal\Ed25519Ref10\keypair.cs" />
     <Compile Include="Internal\Ed25519Ref10\open.cs" />
+    <Compile Include="Internal\Ed25519Ref10\scalarmult.cs" />
+    <Compile Include="Internal\Ed25519Ref10\sc_clamp.cs" />
     <Compile Include="Internal\Ed25519Ref10\sc_mul_add.cs" />
     <Compile Include="Internal\Ed25519Ref10\sc_reduce.cs" />
     <Compile Include="Internal\Ed25519Ref10\sign.cs" />
     <Compile Include="Internal\Ed25519Ref10\sqrtm1.cs" />
-    <Compile Include="OneTimeAuth.cs" />
-    <Compile Include="Poly1305.cs" />
+    <Compile Include="Internal\InternalAssert.cs" />
+    <Compile Include="Internal\Sha512Internal.cs" />
+    <Compile Include="MontgomeryCurve25519.cs" />
+    <Compile Include="Ed25519.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Internal\Array16.cs" />
-    <Compile Include="Internal\Salsa\Salsa20.cs" />
-    <Compile Include="Internal\Salsa\SalsaCore.cs" />
     <Compile Include="Properties\AssemblyInfoFull.cs" />
     <Compile Include="Sha512.cs" />
-    <Compile Include="XSalsa20Poly1305.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.0-preview1-26216-02\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0-preview1-26216-02\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
