@@ -29,14 +29,14 @@ namespace Chaos.NaCl
 			Ed25519Operations.crypto_sign2(signature, message, expandedPrivateKey);
 		}
 
-		public static byte[] Sign(byte[] message, byte[] expandedPrivateKey)
+		public static byte[] Sign(ReadOnlySpan<byte> message, ReadOnlySpan<byte> expandedPrivateKey)
 		{
 			var signature = new byte[SignatureSizeInBytes];
 			Sign(signature, message, expandedPrivateKey);
 			return signature;
 		}
 
-		public static byte[] PublicKeyFromSeed(byte[] privateKeySeed)
+		public static byte[] PublicKeyFromSeed(ReadOnlySpan<byte> privateKeySeed)
 		{
 			var publicKey = new byte[PublicKeySizeInBytes];
 			Span<byte> privateKey = stackalloc byte[ExpandedPrivateKeySizeInBytes];
@@ -45,7 +45,7 @@ namespace Chaos.NaCl
 			return publicKey;
 		}
 
-		public static byte[] ExpandedPrivateKeyFromSeed(byte[] privateKeySeed)
+		public static byte[] ExpandedPrivateKeyFromSeed(ReadOnlySpan<byte> privateKeySeed)
 		{
 			Span<byte> publicKey = stackalloc byte[PublicKeySizeInBytes];
 			var privateKey = new byte[ExpandedPrivateKeySizeInBytes];

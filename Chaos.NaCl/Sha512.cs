@@ -95,7 +95,7 @@ namespace Chaos.NaCl
 			BinaryPrimitives.WriteUInt64BigEndian(output.Slice(40), _state.x5);
 			BinaryPrimitives.WriteUInt64BigEndian(output.Slice(48), _state.x6);
 			BinaryPrimitives.WriteUInt64BigEndian(output.Slice(56), _state.x7);
-			_state = default(Array8<ulong>);
+			_state = default;
 		}
 
 		[Obsolete]

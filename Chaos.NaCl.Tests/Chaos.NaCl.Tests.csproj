@@ -68,7 +68,6 @@
     <Compile Include="CryptoBytesTest.cs" />
     <Compile Include="Ed25519Tests.cs" />
     <Compile Include="Ed25519TestVectors.cs" />
-    <Compile Include="InternalAssertTests.cs" />
     <Compile Include="MontgomeryCurve25519TestVectors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MontgomeryCurve25519Tests.cs" />
@@ -76,13 +75,13 @@
     <Compile Include="TestHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chaos.NaCl\Chaos.NaCl.csproj">
-      <Project>{ae28fd14-7985-4707-a963-c94b8597ae50}</Project>
-      <Name>Chaos.NaCl</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Chaos.NaCl\Chaos.NaCl.csproj">
+      <Project>{5d9d9328-2be8-4e6d-a3a0-fa38f34320db}</Project>
+      <Name>Chaos.NaCl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -56,7 +56,7 @@
       <Name>Chaos.NaCl.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chaos.NaCl\Chaos.NaCl.csproj">
-      <Project>{ae28fd14-7985-4707-a963-c94b8597ae50}</Project>
+      <Project>{5d9d9328-2be8-4e6d-a3a0-fa38f34320db}</Project>
       <Name>Chaos.NaCl</Name>
     </ProjectReference>
   </ItemGroup>

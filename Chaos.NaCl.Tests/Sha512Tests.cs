@@ -89,7 +89,7 @@ namespace Chaos.NaCl.Tests
             TestHelpers.AssertEqualBytes(hashExpected, hash2);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void Sha512_1000000()
         {
             Array8<ulong> state;
@@ -97,7 +97,7 @@ namespace Chaos.NaCl.Tests
             Sha512Internal.Sha512Init(out state);
             for (int i = 0; i < 100000; i++)
                 Sha512Internal.Core(out state, in state, in data);
-        }
+        }*/
 
         [TestMethod]
         public void Sha512Abc()
