@@ -1,17 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.1</TargetFramework>
-    <Authors>CodesInChaos</Authors>
+    <TargetFrameworks>netcoreapp2.0;net46;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <LangVersion>7.2</LangVersion>
+
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+
+    <Authors>CodesInChaos, Splamy</Authors>
     <Product>Chaos.NaCl cryptography library</Product>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.2</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.2</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Chaos.NaCl Ed25519 library. Stripped and modified to use internal structures.</Description>
+    <PackageProjectUrl>https://github.com/Splamy/Chaos.NaCl</PackageProjectUrl>
+    <PackageId>Splamy.Ed25519.Toolkit</PackageId>
+    <Copyright>Public Domain</Copyright>
+    <Version>1.0.2-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>
