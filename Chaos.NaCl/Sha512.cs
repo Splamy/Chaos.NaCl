@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Chaos.NaCl.Internal;
+using System;
 using System.Buffers.Binary;
-using Chaos.NaCl.Internal;
 
 namespace Chaos.NaCl
 {
@@ -27,7 +27,7 @@ namespace Chaos.NaCl
 		[Obsolete]
 		public void Update(byte[] data, int offset, int count)
 		{
-			Update(data.AsReadOnlySpan().Slice(offset, count));
+			Update(data.AsSpan().Slice(offset, count));
 		}
 
 		public void Update(ReadOnlySpan<byte> data)
@@ -84,7 +84,24 @@ namespace Chaos.NaCl
 				Sha512Internal.Core(out _state, in _state, in block);
 				block = default;
 			}
-			block.x15 = (_totalBytes - 1) * 8;
+			block = new Array16<ulong>(
+				block.x0,
+				block.x1,
+				block.x2,
+				block.x3,
+				block.x4,
+				block.x5,
+				block.x6,
+				block.x7,
+				block.x8,
+				block.x9,
+				block.x10,
+				block.x11,
+				block.x12,
+				block.x13,
+				block.x14,
+				(_totalBytes - 1) * 8);
+
 			Sha512Internal.Core(out _state, in _state, in block);
 
 			BinaryPrimitives.WriteUInt64BigEndian(output.Slice(0), _state.x0);

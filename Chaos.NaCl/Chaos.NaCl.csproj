@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net46;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;netcoreapp2.1;net46;netstandard1.1;netstandard2.0</TargetFrameworks>
     <LangVersion>7.2</LangVersion>
 
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -14,11 +14,11 @@
     <PackageProjectUrl>https://github.com/Splamy/Chaos.NaCl</PackageProjectUrl>
     <PackageId>Splamy.Ed25519.Toolkit</PackageId>
     <Copyright>Public Domain</Copyright>
-    <Version>1.0.2-alpha</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory" Version="4.5.0-preview1-26216-02" />
+    <PackageReference Condition="'$(TargetFramework)' != 'netcoreapp2.1'" Include="System.Memory" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
